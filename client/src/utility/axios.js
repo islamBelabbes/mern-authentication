@@ -2,15 +2,16 @@ import axios from "axios";
 import { useAuthStore } from "../store";
 import { logout } from "../api/auth";
 export const publicApi = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://mern-authentication-system-backend.onrender.com",
   withCredentials: true,
 });
 export const privetApi = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://mern-authentication-system-backend.onrender.com",
   withCredentials: true,
 });
 export const refreshTokenApi = axios.create({
-  baseURL: "http://localhost:5000/auth/refresh",
+  baseURL:
+    "https://mern-authentication-system-backend.onrender.com/auth/refresh",
   withCredentials: true,
 });
 
