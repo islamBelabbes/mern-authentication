@@ -15,7 +15,7 @@ function Account() {
   return (
     <div className="w-[500px] flex flex-col justify-center border-amber-200 border p-3 overflow-x-auto">
       <h1 className="text-center">Account Data</h1>
-      <BlockUi blocked={false}>
+      <BlockUi blocked={true} className={"mt-1"}>
         <button
           className="w-full mt-1 text-white rounded bg-zinc-900 disabled:opacity-5 disabled:cursor-not-allowed"
           onClick={GetData}
