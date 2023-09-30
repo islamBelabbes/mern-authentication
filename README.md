@@ -1,7 +1,7 @@
 # mern-authentication system
 
 # backend
-- epxress ✅
+- express ✅
 - jwt ✅
 - yup ✅
 
