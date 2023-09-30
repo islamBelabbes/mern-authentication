@@ -58,6 +58,7 @@ function Login() {
             type="text"
             name="email"
             id="email"
+            placeholder="use admin@admin.com"
           />
           <label htmlFor="password">password</label>
           <input
@@ -65,6 +66,7 @@ function Login() {
             type="password"
             name="password"
             id="password"
+            placeholder="use admin"
           />
           <button
             className="w-full mt-1 text-white rounded bg-zinc-900 disabled:cursor-not-allowed"
