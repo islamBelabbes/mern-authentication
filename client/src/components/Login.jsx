@@ -4,12 +4,12 @@ import { useMutation } from "react-query";
 import { login } from "../api/auth";
 import BlockUi from "./BlockUi";
 import { useAuthStore } from "../store";
-import useIsAuthenticated from "../hooks/auth/useIsAuthenticated";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 function Login() {
+  const isAuth = useAuthStore((state) => state.isAuth);
+  const token = useAuthStore((state) => state.token);
   let { state } = useLocation();
   const navigate = useNavigate();
-  const isAuth = useIsAuthenticated();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const refreshToken = useAuthStore((state) => state.refreshToken);
   const loginMutation = useMutation({
@@ -46,7 +46,8 @@ function Login() {
     const formProps = Object.fromEntries(formObj);
     loginMutation.mutate(formProps);
   };
-  if (isAuth !== undefined && isAuth) return <Navigate to="/" replace />;
+
+  if (isAuth) return <Navigate to="/" replace />;
   return (
     <div className="w-[500px] flex flex-col justify-center border-amber-200 border p-3">
       <h1 className="text-center">Login</h1>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useUser from "../hooks/auth/useUser";
 import BlockUi from "./BlockUi";
+import { refresh } from "../api/auth";
 function Account() {
   const [userData, setUserDate] = useState("");
   const [getUser, getFullUser] = useUser();
@@ -16,6 +17,13 @@ function Account() {
     <div className="w-[500px] flex flex-col justify-center border-amber-200 border p-3 overflow-x-auto">
       <h1 className="text-center">Account Data</h1>
       <BlockUi blocked={false} className={"mt-1"}>
+        <button
+          onClick={() => {
+            refresh();
+          }}
+        >
+          Refresh
+        </button>
         <button
           className="w-full mt-1 text-white rounded bg-zinc-900 disabled:opacity-5 disabled:cursor-not-allowed"
           onClick={GetData}
