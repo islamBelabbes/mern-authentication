@@ -7,7 +7,6 @@ import { useAuthStore } from "../store";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 function Login() {
   const isAuth = useAuthStore((state) => state.isAuth);
-  const token = useAuthStore((state) => state.token);
   let { state } = useLocation();
   const navigate = useNavigate();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
@@ -26,6 +25,7 @@ function Login() {
           setAccessToken(data.accessToken);
           state?.from ? navigate(state?.from) : navigate("/");
         },
+        pauseOnFocusLoss: false,
         autoClose: 500,
       });
     },
@@ -60,6 +60,7 @@ function Login() {
             name="email"
             id="email"
             placeholder="use admin@admin.com"
+            autoComplete="true"
           />
           <label htmlFor="password">password</label>
           <input
@@ -68,6 +69,7 @@ function Login() {
             name="password"
             id="password"
             placeholder="use admin"
+            autoComplete="false"
           />
           <button
             className="w-full mt-1 text-white rounded bg-zinc-900 disabled:cursor-not-allowed"

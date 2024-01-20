@@ -36,7 +36,7 @@ privetApi.interceptors.response.use(
   },
   async function (error) {
     const { config } = error;
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       await useAuthStore.getState().refreshToken();
       return privetApi(config);
     }
@@ -50,8 +50,7 @@ refreshTokenApi.interceptors.response.use(
     return response;
   },
   async function (error) {
-    if (error.response.status === 401) {
-      await logout();
+    if (error?.response?.status === 401) {
       useAuthStore.getState().setAccessToken("");
     }
     // Any status codes that falls outside the range of 2xx cause this function to trigger

@@ -15,15 +15,15 @@ function Account() {
   };
   return (
     <div className="w-[500px] flex flex-col justify-center border-amber-200 border p-3 overflow-x-auto">
+      <button
+        onClick={() => {
+          refresh();
+        }}
+      >
+        refresh
+      </button>
       <h1 className="text-center">Account Data</h1>
       <BlockUi blocked={false} className={"mt-1"}>
-        <button
-          onClick={() => {
-            refresh();
-          }}
-        >
-          Refresh
-        </button>
         <button
           className="w-full mt-1 text-white rounded bg-zinc-900 disabled:opacity-5 disabled:cursor-not-allowed"
           onClick={GetData}

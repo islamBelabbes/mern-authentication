@@ -9,7 +9,8 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const errorHandler = require("./src/middleware/errorHandlerMiddleware");
 // cors
-app.use(cors(require("./src/config/cors.config").corsOptions));
+const options = require("./src/config/cors.config").corsOptions;
+app.use(cors(options));
 
 // json
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use(cookieParser());
 dbConnect();
 
 app.use("/auth", require("./src/routes/authRoute"));
+app.use("/auth", require("./src/routes/refreshTokenRoute"));
 // 404 //
 app.use("*", (req, res) => {
   res.status(404).json({ message: "Not Found" });

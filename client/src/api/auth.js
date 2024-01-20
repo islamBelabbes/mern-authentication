@@ -1,3 +1,4 @@
+import axios from "axios";
 import { publicApi, privetApi, refreshTokenApi } from "../utility/axios";
 
 export const login = async (data) => {
@@ -25,8 +26,16 @@ export const logout = async () => {
   }
 };
 export const refresh = async () => {
+  const CancelToken = axios.CancelToken;
+  const source = CancelToken.source();
   try {
-    const response = await refreshTokenApi.get();
+    const response = await refreshTokenApi.post(
+      "",
+      {},
+      {
+        CancelToken: source,
+      }
+    );
     return response.data.data;
   } catch (err) {
     throw err;
