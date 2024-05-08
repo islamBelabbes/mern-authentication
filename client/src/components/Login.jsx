@@ -4,12 +4,11 @@ import { useMutation } from "react-query";
 import { login } from "../api/auth";
 import BlockUi from "./BlockUi";
 import { useAuthStore } from "../store";
-import useIsAuthenticated from "../hooks/auth/useIsAuthenticated";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 function Login() {
+  const isAuth = useAuthStore((state) => state.isAuth);
   let { state } = useLocation();
   const navigate = useNavigate();
-  const isAuth = useIsAuthenticated();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const refreshToken = useAuthStore((state) => state.refreshToken);
   const loginMutation = useMutation({
@@ -26,6 +25,7 @@ function Login() {
           setAccessToken(data.accessToken);
           state?.from ? navigate(state?.from) : navigate("/");
         },
+        pauseOnFocusLoss: false,
         autoClose: 500,
       });
     },
@@ -46,7 +46,8 @@ function Login() {
     const formProps = Object.fromEntries(formObj);
     loginMutation.mutate(formProps);
   };
-  if (isAuth !== undefined && isAuth) return <Navigate to="/" replace />;
+
+  if (isAuth) return <Navigate to="/" replace />;
   return (
     <div className="w-[500px] flex flex-col justify-center border-amber-200 border p-3">
       <h1 className="text-center">Login</h1>
@@ -59,6 +60,7 @@ function Login() {
             name="email"
             id="email"
             placeholder="use admin@admin.com"
+            autoComplete="true"
           />
           <label htmlFor="password">password</label>
           <input
@@ -67,6 +69,7 @@ function Login() {
             name="password"
             id="password"
             placeholder="use admin"
+            autoComplete="false"
           />
           <button
             className="w-full mt-1 text-white rounded bg-zinc-900 disabled:cursor-not-allowed"

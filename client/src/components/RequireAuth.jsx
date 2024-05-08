@@ -1,13 +1,12 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import useIsAuthenticated from "../hooks/auth/useIsAuthenticated";
 import Logout from "./Logout";
+import { useAuthStore } from "../store";
 
 function RequireAuth() {
-  const isAuth = useIsAuthenticated();
+  const isAuth = useAuthStore((state) => state.isAuth);
   const location = useLocation();
-
-  if (isAuth !== undefined && !isAuth)
+  if (!isAuth) {
     return (
       <Navigate
         to="/login"
@@ -17,6 +16,7 @@ function RequireAuth() {
         replace
       />
     );
+  }
   return (
     <>
       <Logout />

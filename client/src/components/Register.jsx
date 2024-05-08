@@ -1,13 +1,13 @@
 import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import useIsAuthenticated from "../hooks/auth/useIsAuthenticated";
 import { useMutation } from "react-query";
 import { register } from "../api/auth";
 import { toast } from "react-toastify";
 import BlockUi from "./BlockUi";
+import { useAuthStore } from "../store";
 
 function Register() {
-  const isAuth = useIsAuthenticated();
+  const isAuth = useAuthStore((state) => state.isAuth);
   const navigate = useNavigate();
   const signUpMutation = useMutation({
     mutationFn: register,
@@ -31,7 +31,7 @@ function Register() {
     const formProps = Object.fromEntries(formObj);
     signUpMutation.mutate(formProps);
   };
-  if (isAuth !== undefined && isAuth) return <Navigate to="/" replace />;
+  if (isAuth) return <Navigate to="/" replace />;
   return (
     <div className="w-[500px] flex flex-col justify-center border-amber-200 border p-3">
       <h1 className="text-center">Register</h1>
@@ -43,6 +43,7 @@ function Register() {
             type="text"
             name="email"
             id="email"
+            autoComplete="true"
           />
           <label htmlFor="password">password</label>
           <input
@@ -50,6 +51,7 @@ function Register() {
             type="password"
             name="password"
             id="password"
+            autoComplete="false"
           />
           <button className="w-full mt-1 text-white rounded bg-zinc-900 disabled:opacity-5 disabled:cursor-not-allowed">
             Register

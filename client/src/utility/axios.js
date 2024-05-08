@@ -2,16 +2,19 @@ import axios from "axios";
 import { useAuthStore } from "../store";
 import { logout } from "../api/auth";
 export const publicApi = axios.create({
-  baseURL: "https://mern-authentication-system-backend.onrender.com",
+  // baseURL: "https://mern-authentication-system-backend.onrender.com",
+  baseURL: "http://localhost:5000",
   withCredentials: true,
 });
 export const privetApi = axios.create({
-  baseURL: "https://mern-authentication-system-backend.onrender.com",
+  // baseURL: "https://mern-authentication-system-backend.onrender.com",
+  baseURL: "http://localhost:5000",
   withCredentials: true,
 });
 export const refreshTokenApi = axios.create({
-  baseURL:
-    "https://mern-authentication-system-backend.onrender.com/auth/refresh",
+  baseURL: "http://localhost:5000/auth/refresh",
+  // baseURL: "https://mern-authentication-system-backend.onrender.com/auth/refresh",
+
   withCredentials: true,
 });
 
@@ -33,7 +36,7 @@ privetApi.interceptors.response.use(
   },
   async function (error) {
     const { config } = error;
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       await useAuthStore.getState().refreshToken();
       return privetApi(config);
     }
@@ -47,8 +50,7 @@ refreshTokenApi.interceptors.response.use(
     return response;
   },
   async function (error) {
-    if (error.response.status === 401) {
-      await logout();
+    if (error?.response?.status === 401) {
       useAuthStore.getState().setAccessToken("");
     }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
